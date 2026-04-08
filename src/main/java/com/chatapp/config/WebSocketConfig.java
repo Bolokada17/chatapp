@@ -8,6 +8,7 @@ import org.springframework.web.socket.config.annotation.*;
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
+    // Set up the path to a websocket channel
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         // Clients subscribe to /topic/... to receive messages
@@ -16,6 +17,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         config.setApplicationDestinationPrefixes("/app");
     }
 
+    // Set up the webscocket connection
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // WebSocket endpoint, with SockJS fallback

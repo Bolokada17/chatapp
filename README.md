@@ -34,8 +34,8 @@ git tag homework
 
 # Add remote (replace 'campusid' with your actual campus ID)
 git remote add origin ssh://git@gitlab.nt.fh-koeln.de:10022/campusid/chatapp.git
+git push
+git push --tag
 
-# Push code and tag
-git push -u origin main
-git push origin homework
+
 ```

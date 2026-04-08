@@ -24,15 +24,15 @@ public class ChatController {
         this.messagingTemplate = messagingTemplate;
     }
 
-    // ---- Home page ----
-
+    // Get All chats
     @GetMapping("/chats")
-    public String home(Model model) {
+    public String getAllChats(Model model) {
         List<Chat> chats = chatRepository.findAll();
         model.addAttribute("chats", chats);
         return "home";
     }
 
+    // Create a Chat
     @PostMapping("/chats")
     public String createChat(@RequestParam String topic) {
         if (topic != null && !topic.trim().isEmpty()) {
@@ -41,10 +41,10 @@ public class ChatController {
         return "redirect:/chats";
     }
 
-    // ---- Chat page ----
 
+    // Get all messages from a chat
     @GetMapping("/chats/{id}")
-    public String chatPage(@PathVariable Long id, Model model) {
+    public String getAllMessages(@PathVariable Long id, Model model) {
         Chat chat = chatRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Chat not found"));
         List<Message> messages = messageRepository.findByChatIdOrderByIdAsc(id);
@@ -53,6 +53,8 @@ public class ChatController {
         return "chat";
     }
 
+
+    // Send a message
     @PostMapping("/chats/{id}/messages")
     public String sendMessage(@PathVariable Long id,
                               @RequestParam String sender,
