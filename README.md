@@ -32,8 +32,7 @@ git commit -m "Initial homework implementation"
 # Tag for submission
 git tag homework
 
-# Add remote (replace 'campusid' with your actual campus ID)
-git remote add origin ssh://git@gitlab.nt.fh-koeln.de:10022/campusid/chatapp.git
+git remote add origin ssh://git@gitlab.nt.fh-koeln.de:10022/gitlab/mconde/chatapp.git
 git push
 git push --tag
 
