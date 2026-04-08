@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${chat.topic}">Chat</title>
+</head>
+<body>
+
+<h1 th:text="${chat.topic}">Chat Topic</h1>
+
+<table id="messages-table" border="1">
+    <thead>
+        <tr>
+            <th>Sender</th>
+            <th>Content</th>
+        </tr>
+    </thead>
+    <tbody id="messages-body">
+        <tr th:each="msg : ${messages}">
+            <td th:text="${msg.sender}">Sender</td>
+            <td th:text="${msg.content}">Content</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<form th:action="@{/chats/{id}/messages(id=${chat.id})}" method="post">
+    <label for="sender">Sender:</label><br>
+    <input type="text" id="sender" name="sender" required><br><br>
+    <label for="content">Content:</label><br>
+    <textarea id="content" name="content" rows="4" cols="50" required></textarea><br><br>
+    <button type="submit">Send</button>
+</form>
+
+<br>
+<a href="/chats">Back to Home</a>
+
+<!-- SockJS + STOMP for real-time updates -->
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+<script th:inline="javascript">
+    const chatId = [[${chat.id}]];
+
+    const socket = new SockJS('/ws');
+    const stompClient = Stomp.over(socket);
+
+    stompClient.debug = null; // suppress debug logs
+
+    stompClient.connect({}, function () {
+        stompClient.subscribe('/topic/chats/' + chatId, function (message) {
+            const msg = JSON.parse(message.body);
+
+            // Only add if NOT sent by this tab (to avoid duplicates from redirect)
+            // We add every incoming WebSocket message as a new row
+            const tbody = document.getElementById('messages-body');
+            const row = document.createElement('tr');
+
+            const senderCell = document.createElement('td');
+            senderCell.textContent = msg.sender;
+
+            const contentCell = document.createElement('td');
+            contentCell.textContent = msg.content;
+
+            row.appendChild(senderCell);
+            row.appendChild(contentCell);
+            tbody.appendChild(row);
+        });
+    });
+</script>
+
+</body>
+</html>

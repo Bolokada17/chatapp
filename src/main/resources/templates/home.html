@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatApp</title>
+</head>
+<body>
+
+<h1>Existing Chats</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Topics</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="chat : ${chats}">
+            <td>
+                <a th:href="@{/chats/{id}(id=${chat.id})}" th:text="${chat.topic}">Chat Topic</a>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(chats)}">
+            <td>No chats yet.</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<form action="/chats" method="post">
+    <label for="topic">New Chat Topic:</label><br>
+    <input type="text" id="topic" name="topic" placeholder="Enter topic..." required>
+    <button type="submit">Create</button>
+</form>
+
+</body>
+</html>
