@@ -29,11 +29,13 @@ git init
 git add .
 git commit -m "Initial homework implementation"
 
-# Tag for submission
-git tag homework
+
 
 git remote add origin ssh://git@gitlab.nt.fh-koeln.de:10022/gitlab/mconde/chatapp.git
 git push
+
+# Tag for submission
+git tag homework
 git push --tag
 
 
