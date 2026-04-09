@@ -15,18 +15,45 @@ public class Chat {
     @Column(nullable = false)
     private String topic;
 
-    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Column(nullable = false)
+    private String creator;   //  Neu Anpassung
+
+    @OneToMany(
+            mappedBy = "chat",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
     @OrderBy("id ASC")
     private List<Message> messages = new ArrayList<>();
 
-    public Chat() {}
+    public Chat() {
+    }
 
-    public Chat(String topic) {
+    public Chat(String topic, String creator) {   // Neur Konstruktor
+        this.topic = topic;
+        this.creator = creator;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+    public void setTopic(String topic) {
         this.topic = topic;
     }
 
-    public Long getId() { return id; }
-    public String getTopic() { return topic; }
-    public void setTopic(String topic) { this.topic = topic; }
-    public List<Message> getMessages() { return messages; }
+    public String getCreator() {          // GETTER
+        return creator;
+    }
+
+    public void setCreator(String creator) {   // SETTER
+        this.creator = creator;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
 }

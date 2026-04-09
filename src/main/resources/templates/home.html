@@ -10,27 +10,34 @@
 
 <table border="1">
     <thead>
-        <tr>
-            <th>Topics</th>
-        </tr>
+    <tr>
+        <th>Topics</th>
+        <th>Creators</th> <!-- Neu Anpassung -->
+    </tr>
     </thead>
     <tbody>
-        <tr th:each="chat : ${chats}">
-            <td>
-                <a th:href="@{/chats/{id}(id=${chat.id})}" th:text="${chat.topic}">Chat Topic</a>
-            </td>
-        </tr>
-        <tr th:if="${#lists.isEmpty(chats)}">
-            <td>No chats yet.</td>
-        </tr>
+    <tr th:each="chat : ${chats}">
+        <td>
+            <a th:href="@{/chats/{id}(id=${chat.id})}"
+               th:text="${chat.topic}">Chat Topic</a>
+        </td>
+        <td th:text="${chat.creator}">Creator</td> <!-- Neu Anpassung -->
+    </tr>
+
+    <tr th:if="${#lists.isEmpty(chats)}">
+        <td colspan="2">No chats yet.</td>
+    </tr>
     </tbody>
 </table>
-
 <br>
 
 <form action="/chats" method="post">
     <label for="topic">New Chat Topic:</label><br>
-    <input type="text" id="topic" name="topic" placeholder="Enter topic..." required>
+    <input type="text" id="topic" name="topic" placeholder="Enter topic..." required><br><br>
+
+    <label for="creator">Creator:</label><br> <!-- Neu Anpassung -->
+    <input type="text" id="creator" name="creator" placeholder="Enter creator..." required><br><br>
+
     <button type="submit">Create</button>
 </form>
 
